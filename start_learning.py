@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 from bot import Bot
 from board import Board
 
