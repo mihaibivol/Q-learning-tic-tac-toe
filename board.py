@@ -59,7 +59,7 @@ class Board(object):
 		who = self.board[2][0]
 		if who != 0:
 			for i in xrange(2):
-				if self.board[0][2-i] != who:
+				if self.board[i][2-i] != who:
 					break
 			else:
 				return who
