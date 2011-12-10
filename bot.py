@@ -43,12 +43,25 @@ class Bot(object):
 
 	def act(self):
 		state = self.get_state_from_board()
-		move = random.choice(self.board.get_possible_actions())
+		possible_actions = self.board.get_possible_actions()
+		# don't know where to move
+		move = None
 
 		if state in self.strategy:
+			# move in the place with highest score
 			action = max(self.strategy[state], key = lambda a : a['score'])
 			if action['score'] > 0:
 				move = tuple(action['move'])
+			else:
+				# if actions have negative score, remove them from possible actions
+				for act in self.strategy[state]:
+					if tuple(act['move']) in possible_actions:
+						possible_actions.remove(act['move'])
+			if len(possible_actions) == 0:
+				move = tuple(action['move'])
+		
+		if move == None:
+			move = random.choice(possible_actions)
 
 		self.moves.append((state, move))
 		self.board.move(self.color, move)
@@ -80,7 +93,7 @@ class Bot(object):
 				else:
 					old_score = 0
 
-				score = old_score + 0.8 * (0.9 * score - old_score)
+				score = old_score + 0.8 * (0.9 * score - old_score - 10)
 				if state not in strategy:
 					strategy[state] = []
 

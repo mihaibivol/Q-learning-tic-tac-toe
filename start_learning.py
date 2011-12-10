@@ -23,7 +23,7 @@ def run_test():
 	print 'bot %d wins' % board.get_winner()
 
 def main():
-	test_number = 1000
+	test_number = 100
 	while test_number:
 		run_test()
 		test_number -= 1
